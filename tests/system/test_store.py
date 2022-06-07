@@ -15,7 +15,11 @@ class StoreTest(BaseTest):
                                      "No test_store is existing but shall be.")
                 self.assertEqual(response.status_code, 201,
                                  "No store could be created.")
-                self.assertDictEqual({'name': 'test_store', 'items': []}, json.loads(response.data))
+                self.assertDictEqual({
+                    'id': 1,
+                    'name': 'test_store',
+                    'items': []},
+                    json.loads(response.data))
 
     def test_create_duplicate_store(self):
         with self.app() as client:  # get client to interact with app
@@ -71,7 +75,7 @@ class StoreTest(BaseTest):
                 response = client.get('/store/test_store')
 
                 self.assertEqual(response.status_code, 200)
-                self.assertDictEqual({'name': 'test_store', 'items': [{'name': 'test_item', 'price': 19.99}]},
+                self.assertDictEqual({'id': 1, 'name': 'test_store', 'items': [{'name': 'test_item', 'price': 19.99}]},
                                      json.loads(response.data))
 
 
@@ -81,7 +85,7 @@ class StoreTest(BaseTest):
                 StoreModel('test_store').save_to_db()
                 response = client.get('/stores')
 
-                self.assertDictEqual({'stores': [{'name': 'test_store', 'items': []}]}, json.loads(response.data))
+                self.assertDictEqual({'stores': [{'id': 1, 'name': 'test_store', 'items': []}]}, json.loads(response.data))
 
     def test_store_list_with_items(self):
         with self.app() as client:  # get client to interact with app
@@ -90,6 +94,6 @@ class StoreTest(BaseTest):
                 ItemModel('test_item', 19.99, 1).save_to_db()
                 response = client.get('/stores')
 
-                self.assertDictEqual({'stores': [{'name': 'test_store', 'items': [{'name': 'test_item', 'price': 19.99}]}]},
+                self.assertDictEqual({'stores': [{'id': 1, 'name': 'test_store', 'items': [{'name': 'test_item', 'price': 19.99}]}]},
                                      json.loads(response.data))
 

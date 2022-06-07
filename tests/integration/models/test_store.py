@@ -36,6 +36,7 @@ class StoreTest(BaseTest):
     def test_store_json(self):
         store = StoreModel('test store')
         expected = {
+            'id': None,
             'name': 'test store',
             'items': []
         }
@@ -47,6 +48,7 @@ class StoreTest(BaseTest):
             store = StoreModel('test store')
             item = ItemModel('test item', 19.99, 1)
             expected = {
+                'id': 1,
                 'name': 'test store',
                 'items': [{
                     'name': 'test item',
