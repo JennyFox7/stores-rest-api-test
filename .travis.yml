@@ -1,6 +1,7 @@
 language: python
 python:
- - "3.10"
+ - "3.9"
+ - "nightly"
 install:
   - "pip install pytest"
   - "pip install -r requirements.txt"
